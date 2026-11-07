@@ -1,0 +1,11 @@
+{
+	"name": "react_projects",
+	"version": "1.0.0",
+	"private": true,
+	"packageManager": "pnpm@12.15.0",
+	"scripts": {
+		"dev": "pnpm --recursive --parallel --if-present dev",
+		"build": "pnpm --recursive --if-present build",
+		"lint": "pnpm --recursive --if-present lint"
+	}
+}
