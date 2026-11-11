@@ -7,5 +7,9 @@
 		"dev": "pnpm --recursive --parallel --if-present dev",
 		"build": "pnpm --recursive --if-present build",
 		"lint": "pnpm --recursive --if-present lint"
+	},
+	"dependencies": {
+		"@tailwindcss/vite": "^4.3.5",
+		"tailwindcss": "^4.3.5"
 	}
 }
