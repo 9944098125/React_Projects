@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./App.css";
 import Button from "./components/button";
 import ScoreBoard from "./components/score-board";
+import ResultView from "./components/result-view";
 
 const choices = [
 	{
@@ -48,7 +49,6 @@ function App() {
 			showResult: false,
 			resultMessage: undefined,
 		});
-		setScore(0);
 	}
 
 	const clickButton = (id: string, image: string) => {
@@ -69,7 +69,7 @@ function App() {
 				opponentChoice: choices[randomNumber],
 				resultMessage: "SORRY, YOU LOSE",
 			});
-			setScore((prev) => prev - 1);
+			setScore((prev) => (prev === 0 ? 0 : prev - 1));
 		} else if (choices[randomNumber]?.id === "SCISSORS" && id === "SCISSORS") {
 			setValues({
 				showResult: true,
@@ -101,7 +101,7 @@ function App() {
 				opponentChoice: choices[randomNumber],
 				resultMessage: "SORRY, YOU LOSE",
 			});
-			setScore((prev) => prev - 1);
+			setScore((prev) => (prev === 0 ? 0 : prev - 1));
 		} else if (choices[randomNumber]?.id === "PAPER" && id === "ROCK") {
 			setValues({
 				showResult: true,
@@ -109,7 +109,7 @@ function App() {
 				opponentChoice: choices[randomNumber],
 				resultMessage: "SORRY, YOU LOSE",
 			});
-			setScore((prev) => prev - 1);
+			setScore((prev) => (prev === 0 ? 0 : prev - 1));
 		} else if (choices[randomNumber]?.id === "PAPER" && id === "SCISSORS") {
 			setValues({
 				showResult: true,
@@ -130,18 +130,11 @@ function App() {
 	};
 	return (
 		<>
-			<div className="w-full min-h-screen bg-black flex flex-col items-center justify-center">
+			<div className="w-full min-h-screen bg-black flex flex-col items-center p-10">
 				<ScoreBoard score={score} />
-				<div className="flex items-center justify-center gap-5">
+				<div className="w-full mt-10 flex flex-wrap items-center justify-center">
 					{values.showResult ? (
-						<>
-							{values.resultMessage}
-							<button
-								onClick={reset}
-								className="py-4 px-6 rounded-[1.4rem] bg-cyan-600 border-0 text-white">
-								Play Again
-							</button>
-						</>
+						<ResultView values={values} reset={reset} />
 					) : (
 						choices?.map((i) => {
 							return <Button buttonDetails={i} clickButton={clickButton} />;

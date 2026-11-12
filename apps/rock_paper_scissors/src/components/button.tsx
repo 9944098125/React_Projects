@@ -13,10 +13,10 @@ export default function Button(props: Props) {
 
 	return (
 		<React.Fragment>
-			<div className="w-2/4">
+			<div className="w-2/4 my-5 flex items-center justify-center">
 				<button
 					onClick={() => clickButton(buttonDetails?.id, buttonDetails?.image)}
-					className="rounded-full h-[10rem] w-[10rem]">
+					className="rounded-full cursor-pointer h-[15rem] w-[15rem]">
 					<img src={buttonDetails?.image} alt={buttonDetails?.id} />
 				</button>
 			</div>
