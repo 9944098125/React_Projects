@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import EMOJIS from "./collections/emojis";
 
-interface Emoji {
+export interface Emoji {
   id: string;
   name: string;
   src: string;
