@@ -61,9 +61,44 @@ const EmojiMemoryGame: React.FC = () => {
 
   return (
     <>
-      <h1 className="text-green-600 font-extrabold text-2xl">
-        Emoji Memory Game
-      </h1>
+      <div className="flex items-center justify-center">
+        <h1 className="text-[2.5rem] font-bold text-yellow-400">
+          Emoji Memory Game
+        </h1>
+        <p className="my-4 text-center">
+          Click emojis one by one. You must click all the 12 emojis to win.
+        </p>
+        <div className="w-full md:w-1/2 grid grid-cols-12 gap-5 p-5">
+          {shuffledEmojis.map((emoji) => {
+            return (
+              <button
+                key={emoji.id}
+                onClick={() => handleEmojiClick(emoji.id)}
+                className="col-span-4 m-2 h-[4rem] w-[4rem] md:h-[7rem] md:w-[7rem]"
+              >
+                <img
+                  src={emoji.src}
+                  alt={emoji.name}
+                  className="h-full w-full object-contain"
+                />
+              </button>
+            );
+          })}
+        </div>
+
+        <div className="mt-5">
+          <span>Clicks:{clickCount}</span>
+        </div>
+
+        {status !== "playing" && (
+          <div
+            style={{
+              backgroundColor: status === "win" ? "#14532D" : "#7F1D1D",
+            }}
+            className="mt-5 p-4 rounded-1rem text-white shadow-lg text-center"
+          ></div>
+        )}
+      </div>
     </>
   );
 };
