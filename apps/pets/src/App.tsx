@@ -1,5 +1,27 @@
 import { useEffect, useState } from "react";
 import "./App.css";
+import Modal from "react-modal";
+
+const customStyles: ReactModal.Styles = {
+  overlay: {
+    backgroundColor: "rgba(0, 0, 0, 0)",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  content: {
+    position: "relative",
+    inset: "auto",
+    width: "90%",
+    maxWidth: "500px",
+    maxHeight: "85vh",
+    overflow: "auto",
+    border: "none",
+    borderRadius: "12px",
+    padding: "24px",
+    backgroundColor: "#ffffff",
+  },
+};
 
 export interface PetItem {
   description: string;
@@ -14,11 +36,15 @@ function App() {
     bool: boolean;
   }>({ title: undefined, bool: false });
 
+  function closeModal() {
+    setDialog({ title: undefined, bool: false });
+  }
+
   useEffect(() => {
     const fetchPets = async () => {
       const data = await fetch("https://eulerity-hackathon.appspot.com/pets");
       const finalData = await data.json();
-      console.log(finalData);
+      // console.log(finalData);
       setPets(finalData);
     };
 
@@ -37,10 +63,28 @@ function App() {
                 onClick={() => setDialog({ title: each.title, bool: true })}
                 className="my-4 w-full"
               >
-                <img src={each.url} alt={each.title} />
+                <img src={each.url} alt={each.title} className="h-150 w-150" />
                 <p className="text-green-600 font-bold">{each.title}</p>
                 <p className="text-sm font-normal">{each.description}</p>
               </div>
+              {dialog.bool && (
+                <Modal
+                  isOpen={dialog.bool}
+                  onRequestClose={closeModal}
+                  style={customStyles}
+                  contentLabel="Example Modal"
+                >
+                  <div className="w-full">
+                    <img
+                      src={each?.url}
+                      alt={each.title}
+                      className="h-100 w-100"
+                    />
+                    <p className="text-xl font-bold">{each.title}</p>
+                    <p className="text-md font-normal">{each.description}</p>
+                  </div>
+                </Modal>
+              )}
             </>
           );
         })}
