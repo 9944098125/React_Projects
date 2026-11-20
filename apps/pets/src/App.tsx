@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./App.css";
 import Modal from "react-modal";
+import axios from "axios";
+import { PetContext } from "./context/pet-context";
 
 const customStyles: ReactModal.Styles = {
   overlay: {
@@ -30,7 +32,8 @@ export interface PetItem {
   created: string;
 }
 function App() {
-  const [pets, setPets] = useState<PetItem[]>([]);
+  const context = useContext(PetContext);
+  const pets = context?.pets;
   const [dialog, setDialog] = useState<{
     title: string | undefined;
     bool: boolean;
@@ -39,17 +42,6 @@ function App() {
   function closeModal() {
     setDialog({ title: undefined, bool: false });
   }
-
-  useEffect(() => {
-    const fetchPets = async () => {
-      const data = await fetch("https://eulerity-hackathon.appspot.com/pets");
-      const finalData = await data.json();
-      // console.log(finalData);
-      setPets(finalData);
-    };
-
-    fetchPets();
-  }, []);
 
   return (
     <div className="bg-green-50">
@@ -60,6 +52,7 @@ function App() {
           return (
             <>
               <div
+                key={each.created}
                 onClick={() => setDialog({ title: each.title, bool: true })}
                 className="my-4 w-full"
               >
